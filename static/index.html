@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes Sending App</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+<div class="container">
+    <h1>The Sender of Notes</h1>
+    
+    <div id="write-view">
+        <textarea id="note-input" placeholder="Write a message: "></textarea>
+        <input type="password" id="custom-password" placeholder="Optional: Enter a password to lock this note" style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; background: var(--bg-color); color: var(--text-color); border: 1px solid var(--border-color); border-radius: 4px; font-family: inherit;">
+        <div class="checkbox-group">
+            <input type="checkbox" id="burn-toggle">
+            <label for="burn-toggle">Burn message on first read</label>
+        </div>
+
+        <button onclick="createNote()" id="submit-btn">Encrypt & Create Link</button>
+        
+        <div id="link-container" class="alert success-link hidden">
+            <p>Share the link:</p>
+            <br>
+            <a href="#" id="secret-link" style="color: inherit;"></a>
+        </div>
+    </div>
+
+    <div id="read-view" class="hidden">
+        <div id="loading-msg">Fetching and Decrypting...</div>
+        <textarea id="note-display" readonly class="hidden"></textarea>
+        
+        <div id="error-msg" class="alert hidden"></div>
+        <div id="password-prompt" class="hidden">
+            <p style="margin-bottom: 1rem; text-align: center;">This note is password protected.</p>
+            <input type="password" id="decrypt-password" placeholder="Enter password" style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; background: var(--bg-color); color: var(--text-color); border: 1px solid var(--border-color); border-radius: 4px; font-family: inherit;">
+            <button onclick="manualDecrypt()">Decrypt Note</button>
+        </div>
+        
+        <div id="display-container" class="hidden">
+            <textarea id="note-display" readonly></textarea>
+            
+            <div id="destroyed-warning" class="alert hidden">
+            This message was set to 'Burn' and has been permanently deleted from the server.
+            </div>
+            <div id="saved-msg" class="alert success-link hidden">
+            This is a permanent note. You can revisit this link anytime.
+            </div>
+            
+            <button onclick="window.location.href='/'" style="margin-top: 1rem;">Write a New Note</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
